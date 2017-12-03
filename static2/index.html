@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+
+<head></head>
+   <div>
+   <form id="f">
+<style>
+      .droparea {
+          width: 200px;
+          height: 200px;
+          border-style: solid;
+          border-width: 3px;
+          border-color: red;
+          float: left;
+          line-height: 200px;
+          text-align: center;
+      }
+</style>
+  </form>
+  </div>
+<div class="container">
+    <div class="droparea">Drop Here</div>
+    <div class="tablearea" id="tablearea"></div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+
+  var dragHandler = function(evt){
+        evt.preventDefault();
+    };
+    var dropHandler = function(evt){
+        evt.preventDefault();
+        var files = evt.originalEvent.dataTransfer.files;
+        
+	var formData = new FormData();
+        formData.append("file2upload", files[0]);
+
+        var req = {
+            url: "/sendfile",
+            method: "post",
+            processData: false,
+            contentType: 'text/plain',
+            data: formData
+        };
+
+        var promise = $.ajax(req);
+    };
+
+    var dropHandlerSet = {
+        dragover: dragHandler,
+        drop: dropHandler
+    };
+
+    $(".droparea").on(dropHandlerSet);
+
+
+</script>
